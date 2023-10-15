@@ -7,6 +7,14 @@ import axios from './js/axios'
 Vue.use(vueBeauty)
 Vue.config.productionTip = false
 
+// 按需引入
+// 引入ElementUI组件库
+import ElementUI from 'element-ui';
+// 引入ElementUI的全部样式
+import 'element-ui/lib/theme-chalk/index.css';
+
+// 应用ElementUI
+Vue.use(ElementUI)
 
 // 设置Axios响应拦截器
 axios.interceptors.response.use(

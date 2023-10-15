@@ -4,12 +4,18 @@ import HomeInfo from '../components/HomeInfo'
 import TrainInfo from '../components/TrainInfo'
 import InputView from '../views/LoginView'
 import RegisterView from '../views/RegisterView'
+import StationsInfo from '../components/StationsInfo'
 
 Vue.use(VueRouter)
 
 
 export default new VueRouter({
   routes: [
+    {
+      path: '/stationsInfo',
+      name: 'stationsInfo',
+      component: StationsInfo
+    },
     {
       path: '/trainInfo',
       name: 'trainInfo',
