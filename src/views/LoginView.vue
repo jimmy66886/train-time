@@ -1,8 +1,7 @@
 <template>
     <div class="app">
 
-        <h2>列车时刻查询系统</h2>
-        <div class="loading"><v-spin :spinning="spinning" size="large" tip="加载中"></v-spin></div>
+        <div class="title">列车时刻查询系统</div>
         <div class="box">
             <v-form direction="vertical">
                 <v-form-item label="手机号">
@@ -35,7 +34,6 @@ export default {
             },
             // 后端返回的user对象
             user: {},
-            spinning: false,
         }
     },
     methods: {
@@ -97,8 +95,13 @@ export default {
     border: 1px solid rgb(0, 173, 236);
     border-radius: 10px;
     margin: 0 auto;
-    margin-top: 100px;
     padding: 10px;
+}
+
+.title{
+    font-size: 20px;
+    margin-top: 100px;
+    text-align: center
 }
 
 .app {

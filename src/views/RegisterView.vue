@@ -1,5 +1,6 @@
 <template>
     <div class="app">
+        <div class="title">注册</div>
         <div class="box">
             <v-form direction="vertical">
                 <v-form-item label="手机号">
@@ -10,6 +11,9 @@
                 </v-form-item>
                 <v-form-item style="margin-top:24px">
                     <v-button type="primary" @click="loginUp">确定</v-button>
+                    <a @click="showModal">
+                        <p>已有账号? 点击登录</p>
+                    </a>
                 </v-form-item>
             </v-form>
         </div>
@@ -31,6 +35,11 @@ export default {
         }
     },
     methods: {
+
+        showModal() {
+            this.$router.push('/')
+        },
+
         loginUp() {
             // 手机号正则
             var phoneReg = /^(?:(?:\+|00)86)?1[3-9]\d{9}$/
@@ -75,10 +84,15 @@ export default {
     border: 1px solid rgb(0, 173, 236);
     border-radius: 10px;
     margin: 0 auto;
-    margin-top: 100px;
     padding: 10px;
 }
 
+
+.title{
+    font-size: 20px;
+    margin-top: 100px;
+    text-align: center
+}
 .app {
     overflow: hidden;
 }

@@ -15,7 +15,9 @@ instance.interceptors.request.use((config) => {
   if (config.url === '/user/login' || config.url === '/user/register') {
     config.requiresToken = false;
   } else {
-    var token = JSON.parse(localStorage.getItem('userInfo')).token; // 从本地存储中获取token
+    if(JSON.parse(localStorage.getItem('userInfo'))!=null){
+      var token = JSON.parse(localStorage.getItem('userInfo')).token; // 从本地存储中获取token
+    }
   }
 
   // 如果请求需要token，添加token到请求头
@@ -24,5 +26,4 @@ instance.interceptors.request.use((config) => {
   }
   return config;
 });
-
 export default instance;
