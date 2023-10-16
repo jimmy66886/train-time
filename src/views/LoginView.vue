@@ -122,7 +122,7 @@ export default {
 .loading {
     text-align: center;
     top: 60px;
-    right: 710px;
+    right: 580px;
     position: absolute;
 }
 </style>

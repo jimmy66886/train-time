@@ -8,11 +8,17 @@ import StationsInfo from '../components/StationsInfo'
 import StationInfo from '../components/StationInfo'
 import AdminLoginView from '../views/AdminLoginView'
 import TrainManageView from '../views/TrainManageView'
+import TrainLikeView from '../views/TrainLikeView'
 Vue.use(VueRouter)
 
 
 export default new VueRouter({
   routes: [
+    {
+      path: '/trainLikeView',
+      name: 'trainLikeView',
+      component: TrainLikeView
+    },
     {
       path: '/trainManage',
       name: 'trainManage',

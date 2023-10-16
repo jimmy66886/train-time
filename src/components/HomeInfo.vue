@@ -132,15 +132,18 @@ export default {
                 return
             }
 
-            axios.get(`/train/getByNumber/${this.trainNumber}`).then(res => {
+            axios.get(`/train/getByNumberLike/${this.trainNumber}`).then(res => {
 
-                if (res.data.data == null) {
+                if (res.data.data.length == 0) {
                     this.$message.info("暂无此列车信息")
                     return
                 }
-
-                localStorage.setItem('trainInfo', JSON.stringify(res.data.data))
-                this.$router.push("/trainInfo")
+                
+                // 将用户输入的列车车次存入本地存储
+                localStorage.setItem('trainNumber', this.trainNumber)
+                // 将后端返回的数据存入
+                localStorage.setItem('trainsInfo', JSON.stringify(res.data.data))
+                this.$router.push("/trainLikeView")
             })
         },
         testRequest() {

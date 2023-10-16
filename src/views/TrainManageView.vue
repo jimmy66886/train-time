@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-
+    <h1>列车信息</h1>
     <!-- 修改酒店的弹框 -->
     <el-dialog title="更改信息" :visible.sync="dialogVisible" width="50%">
 
@@ -132,5 +132,11 @@ export default {
 .app {
   width: 1200px;
   margin: 0 auto;
+}
+
+.app h1 {
+  font-size: 26px;
+  color: rgb(147, 149, 149);
+  margin-top: 50px;
 }
 </style>
