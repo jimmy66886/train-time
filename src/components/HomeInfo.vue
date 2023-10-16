@@ -7,7 +7,7 @@
             <template>
                 <v-tabs active-tab-key="1">
                     <v-tab-pane tab-key="1" icon="environment" tab="站站搜索">
-                        <div>车站</div>
+                        <div class="tip">车站</div>
                         <div class="stationSerachUp">
                             <v-input v-model="start" size="large"></v-input>
                             <img src="../images/Reverse.png" @click="reverse"
@@ -15,8 +15,14 @@
                             <v-input v-model="end" size="large"></v-input>
                         </div>
                         <div class="stationSeachDown">
-                            <v-date-picker v-model="date1" clearable @change="change"></v-date-picker>
-                            <v-button type="primary" icon="search" @click="getByStations"><span>搜索</span></v-button>
+                            <!-- <v-date-picker v-model="date1" clearable @change="change"></v-date-picker> -->
+                            <br><br>
+                            <div>
+                                <v-radio v-model="radio" label="高铁">高铁</v-radio>
+                                <v-radio v-model="radio" label="动车">动车</v-radio>
+                            </div>
+                            <v-button class="searchButton" type="primary" icon="search"
+                                @click="getByStations"><span>搜索</span></v-button>
                         </div>
                     </v-tab-pane>
                     <v-tab-pane tab-key="2" icon="car" tab="车次搜索">
@@ -27,8 +33,23 @@
                                 @click="getByNumber"><span>搜索</span></v-button>
                         </div>
                     </v-tab-pane>
+                    <v-tab-pane tab-key="3" icon="global" tab="车站搜索">
+                        <span class="tip">车站查询</span>
+                        <div class="search_box">
+                            <v-input placeholder="车站搜索,如汉中" v-model="station" size="large"></v-input>
+                            <v-button size="large" type="primary" icon="search"
+                                @click="getByStation"><span>搜索</span></v-button>
+                        </div>
+                        <br><br>
+                        <div>
+                            <v-radio v-model="radio" label="高铁">高铁</v-radio>
+                            <v-radio v-model="radio" label="动车">动车</v-radio>
+                        </div>
+                    </v-tab-pane>
                 </v-tabs>
             </template>
+            <v-button class="exitButton" @click="exit">注销</v-button>
+            <!-- <v-button class="adminButton" @click="back">后台</v-button> -->
         </div>
 
     </div>
@@ -43,35 +64,55 @@ export default {
         return {
             userInfo: {},
             trainNumber: '',
-            date1: '',
             start: '',
-            noteDate: '',
             end: '',
-            // 暂时支持查询的车站
-            stationArr: ['汉中', '西安北']
+            radio: '高铁',
+            station: '',
         }
     },
-    watch: {
-        date1(val) {
-            console.log('watch:', val)
-            this.noteDate = val
-            console.log("更新后的时间为:" + this.noteDate)
-        },
-    },
     methods: {
-        getByStations() {
-            // 校验车站是否正确
-            if(!this.stationArr.includes(this.start)||!this.stationArr.includes(this.end)){
-                this.$message.info("未包含此车站")
+        // back() {
+        //     this.$router.push('/adminLogin')
+        // },
+        exit() {
+            // 退出,则删除本地存储的用户数据
+            localStorage.removeItem('userInfo')
+            this.$router.push('/')
+        },
+        // 根据车站名获取车站信息
+        getByStation() {
+            if (this.station == '') {
+                this.$message.info("请输入车站")
                 return
             }
-            // 存在该车站数据,发送请求
-            axios.get(`/train/getByStations?start=${this.start}&end=${this.end}`)
-            .then(res => {
-                console.log(res.data)
-                localStorage.setItem('trains', JSON.stringify(res.data.data))
-                this.$router.push('/stationsInfo')
+
+            axios.get(`/train/getByStation?station=${this.station}&type=${this.radio}`).then(res => {
+                if (res.data.data.length == 0) {
+                    this.$message.info("暂无此车站信息")
+                    return
+                }
+                localStorage.setItem('stationTrain', JSON.stringify(res.data.data))
+                this.$router.push("/stationInfo")
             })
+
+        },
+        // 根据车站<=>车站获取信息
+        getByStations() {
+            // 校验车站是否正确
+            if (this.start == '' || this.end == '') {
+                this.$message.info("请输入车站")
+                return
+            }
+            axios.get(`/train/getByStations?start=${this.start}&end=${this.end}&type=${this.radio}`)
+                .then(res => {
+                    if (res.data.data.length == 0) {
+                        this.$message.info("暂无信息")
+                        return
+                    }
+                    console.log(res.data)
+                    localStorage.setItem('trains', JSON.stringify(res.data.data))
+                    this.$router.push('/stationsInfo')
+                })
 
         },
         // 反转车站顺序
@@ -83,7 +124,14 @@ export default {
         change(time) {
             console.log('change:', time)
         },
+        // 根据车次获取信息
         getByNumber() {
+
+            if (this.trainNumber == null) {
+                this.$message.info("请输入车次")
+                return
+            }
+
             axios.get(`/train/getByNumber/${this.trainNumber}`).then(res => {
 
                 if (res.data.data == null) {
@@ -122,20 +170,37 @@ export default {
             this.$router.push("/")
         }
     },
-    created() {
-        // 获取当前时间
-        this.getCurrentDate()
-    }
 }
 </script>
 
 <style scoped>
+
+.adminButton {
+    position: absolute;
+    bottom: 0;
+    right: 60px;
+}
+
+.exitButton {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+
 .stationSeachDown {
     width: 100%;
     height: 100px;
-    display: flex;
+    /* display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; */
+    position: relative;
+}
+
+.searchButton {
+    bottom: 30px;
+    right: 10px;
+    position: absolute;
 }
 
 .stationSerachUp {
@@ -166,5 +231,6 @@ export default {
     height: 500px;
     margin-top: 100px;
     padding: 15px;
+    position: relative;
 }
 </style>

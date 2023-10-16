@@ -5,12 +5,29 @@ import TrainInfo from '../components/TrainInfo'
 import InputView from '../views/LoginView'
 import RegisterView from '../views/RegisterView'
 import StationsInfo from '../components/StationsInfo'
-
+import StationInfo from '../components/StationInfo'
+import AdminLoginView from '../views/AdminLoginView'
+import TrainManageView from '../views/TrainManageView'
 Vue.use(VueRouter)
 
 
 export default new VueRouter({
   routes: [
+    {
+      path: '/trainManage',
+      name: 'trainManage',
+      component: TrainManageView
+    },
+    {
+      path: '/adminLogin',
+      name: 'adminLogin',
+      component: AdminLoginView
+    },
+    {
+      path: '/stationInfo',
+      name: 'stationInfo',
+      component: StationInfo
+    },
     {
       path: '/stationsInfo',
       name: 'stationsInfo',

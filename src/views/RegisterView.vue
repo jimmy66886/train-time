@@ -66,7 +66,7 @@ export default {
                         this.$message.info(res.data.msg)
                         return
                     }
-                    this.$message.info('注册成功', 1)
+                    this.$message.info('注册成功,跳转至登录界面', 1)
                     localStorage.setItem('replayName',JSON.stringify(this.user.account))
                     setTimeout(() => {
                         this.$router.push('/')

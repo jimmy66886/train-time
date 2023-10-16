@@ -1,6 +1,6 @@
 <template>
     <div class="app">
-
+        <div class="loading"><v-spin :spinning="spinning" tip="加载中"></v-spin></div>
         <div class="title">列车时刻查询系统</div>
         <div class="box">
             <v-form direction="vertical">
@@ -11,7 +11,8 @@
                     <v-input type="password" v-model="loginUser.password" placeholder="密码" size="large"></v-input>
                 </v-form-item>
                 <v-form-item style="margin-top:24px">
-                    <v-button type="primary" @click="enter">确定</v-button>
+                    <v-button type="primary" @click="enter">确定</v-button>&nbsp;&nbsp;&nbsp;
+                    <v-button type="primary" @click="back">后台</v-button>
                     <a @click="showModal">
                         <p>没有账号? 点击注册</p>
                     </a>
@@ -34,9 +35,13 @@ export default {
             },
             // 后端返回的user对象
             user: {},
+            spinning: false,
         }
     },
     methods: {
+        back() {
+            this.$router.push('/adminLogin')
+        },
 
         showModal() {
             this.$router.push('/register')
@@ -44,6 +49,8 @@ export default {
 
 
         enter() {
+
+            this.spinning = true
 
             // 手机号正则
             var phoneReg = /^(?:(?:\+|00)86)?1[3-9]\d{9}$/
@@ -71,8 +78,11 @@ export default {
                     }
                     // 将用户信息保存
                     localStorage.setItem('userInfo', JSON.stringify(res.data.data))
-                    this.$router.push('/homeInfo')
-                }).catch(res=>{
+                    setTimeout(() => {
+                        this.spinning = false
+                        this.$router.push('/homeInfo')
+                    }, 1000);
+                }).catch(res => {
                     this.$message.info("未知错误")
                 })
         },
@@ -98,18 +108,21 @@ export default {
     padding: 10px;
 }
 
-.title{
+.title {
     font-size: 20px;
     margin-top: 100px;
     text-align: center
 }
 
 .app {
+    position: relative;
     overflow: hidden;
 }
 
 .loading {
-    padding-top: 70px;
     text-align: center;
+    top: 60px;
+    right: 710px;
+    position: absolute;
 }
 </style>

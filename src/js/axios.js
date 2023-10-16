@@ -12,7 +12,7 @@ instance.interceptors.request.use((config) => {
   // 默认情况下需要token
   config.requiresToken = true;
   // 如果请求不需要token，将requiresToken设置为false
-  if (config.url === '/user/login' || config.url === '/user/register') {
+  if (config.url === '/user/login' || config.url === '/user/register'||config.url.startsWith('/admin/train/')) { 
     config.requiresToken = false;
   } else {
     if(JSON.parse(localStorage.getItem('userInfo'))!=null){
