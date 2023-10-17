@@ -1,6 +1,6 @@
 <template>
     <div class="app">
-        <div class="title">"<span>{{ trainNumber }}</span>"相关车次列车时刻查询</div>
+        <div class="title">"<span>{{ trainNumberLike }}</span>"相关车次列车时刻查询</div>
         <el-table :data="trainInfo" style="width: 100%" :default-sort="{ prop: 'date', order: 'descending' }">
             <el-table-column prop="trainNumber" label="车次" sortable>
                 <template scope="scope">
@@ -34,6 +34,7 @@ export default {
         return {
             trainInfo: [],
             trainNumber: '',
+            trainNumberLike: '',
         }
     },
     methods: {
@@ -50,7 +51,7 @@ export default {
     },
     created() {
         this.trainInfo = JSON.parse(localStorage.getItem('trainsInfo'))
-        this.trainNumber = localStorage.getItem('trainNumber')
+        this.trainNumberLike = localStorage.getItem('trainNumberLike')
     }
 }
 </script>

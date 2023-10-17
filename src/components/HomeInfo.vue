@@ -140,7 +140,7 @@ export default {
                 }
                 
                 // 将用户输入的列车车次存入本地存储
-                localStorage.setItem('trainNumber', this.trainNumber)
+                localStorage.setItem('trainNumberLike', this.trainNumber)
                 // 将后端返回的数据存入
                 localStorage.setItem('trainsInfo', JSON.stringify(res.data.data))
                 this.$router.push("/trainLikeView")
