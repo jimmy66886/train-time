@@ -4,8 +4,8 @@ import axios from 'axios';
 
 // 创建一个 Axios 实例
 const instance = axios.create({
-  // baseURL: 'http://localhost:8080', // 设置后端API的基本URL
-  baseURL: 'http://1.14.102.11:8080', // 设置后端API的基本URL
+  baseURL: 'http://localhost:8080', // 设置后端API的基本URL
+  // baseURL: 'http://1.14.102.11:8080', // 设置后端API的基本URL
 });
 
 // 在请求头中添加token

@@ -55,6 +55,7 @@
                             <th>车站</th>
                             <th>到达时间</th>
                             <th>发车时间</th>
+                            <th>停靠时间(分钟)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,6 +64,7 @@
                             <td>{{ station.station }}</td>
                             <td>{{ station.arrivalTime }}</td>
                             <td>{{ station.departureTime }}</td>
+                            <td>{{ station.dockingTime }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -86,16 +88,19 @@ export default {
                 routeSite: this.trainInfo.routeSite,
                 routeTimeA: this.trainInfo.routeTimeA,
                 routeTimeE: this.trainInfo.routeTimeE,
+                dockingTimes: this.trainInfo.dockingTimes
             };
 
             const stations = routeData.routeSite.split(",");
             const arrivalTimes = routeData.routeTimeA.split(",");
             const departureTimes = routeData.routeTimeE.split(",");
+            const dockingTimesArr = routeData.dockingTimes.split(",");
 
             const tableData = stations.map((station, index) => ({
                 station,
                 arrivalTime: arrivalTimes[index],
                 departureTime: departureTimes[index],
+                dockingTime: dockingTimesArr[index]
             }));
             this.stations = tableData
             console.log(tableData)
